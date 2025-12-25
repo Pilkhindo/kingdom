@@ -6,278 +6,312 @@
 <title>Kingdom Anime</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    font-family:Arial, sans-serif;
+    background:#0f172a;
+    color:#fff;
+    overflow:hidden;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #0f172a;
-    color: #fff;
-    height: 100vh;
+/* ========== PAGE 1 ========== */
+#kingdomPage{padding:20px;overflow:auto;height:100vh}
+.container{max-width:1000px;margin:auto}
+.sinopsis{
+    text-align: justify;
 }
-#readMore {
-    display: inline-block;
-    margin-top: 12px;
-    color: #93c5fd;
-    cursor: pointer;
-    font-size: 14px;
-    text-decoration: underline;
+.series-card{
+    display:flex;
+    background:#111827;
+    border-radius:12px;
+    overflow:hidden;
+    margin-bottom:30px;
+    box-shadow:0 15px 40px rgba(0,0,0,.5)
+}
+.series-card img{
+    width:35%;
+    object-fit:cover;
+}
+.series-info{padding:20px}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#020617;
+    border-radius:10px;
+}
+th,td{padding:14px}
+th{background:#1e293b}
+
+.rating-bar{
+    background:#1e293b;
+    border-radius:20px;
+    overflow:hidden;
+}
+.rating-fill{
+    height:10px;
+    background:linear-gradient(90deg,#22c55e,#4ade80);
 }
 
-#readMore:hover {
-    color: #bfdbfe;
+/* ========== SURPRISE PAGE ========== */
+#surprisePage{
+    display:none;
+    position:relative;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background:linear-gradient(135deg,#220079,#0033ff);
+    overflow:hidden;
 }
 
-.hidden-text {
-    display: none;
-    margin-top: 12px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.6s ease;
+/* animasi masuk */
+#surprisePage.show{
+    animation:pageReveal 1s ease forwards;
+}
+@keyframes pageReveal{
+    from{opacity:0;transform:scale(1.1);filter:blur(8px)}
+    to{opacity:1;transform:scale(1);filter:blur(0)}
 }
 
-.hidden-text.show {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
+/* tengah */
+.surprise-box{
+    background:rgba(255,255,255,.2);
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    backdrop-filter:blur(12px);
+    z-index:5;
+    max-width:420px;
+    transform:scale(.7);
+    opacity:0;
+    animation:boxPop .8s cubic-bezier(.17,.89,.32,1.49) forwards;
+    animation-delay:.3s;
+}
+@keyframes boxPop{
+    to{transform:scale(1);opacity:1}
 }
 
-/* ================= PAGE 1 ================= */
-#kingdomPage {
-    padding: 20px;
+.surprise-box img{
+    width:180px;
+    border-radius:50%;
+    margin-bottom:20px;
 }
 
-.container {
-    max-width: 1000px;
-    margin: auto;
+#readMore{
+    margin-top:14px;
+    color:#bfdbfe;
+    cursor:pointer;
+    text-decoration:underline;
+    display:inline-block;
 }
 
-.series-card {
-    display: flex;
-    background: #111827;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 30px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+.hidden-text{
+    display:none;
+    margin-top:15px;
+    opacity:0;
+    transform:translateY(10px);
+    transition:.6s;
+}
+.hidden-text.show{
+    display:block;
+    opacity:1;
+    transform:translateY(0);
 }
 
-.series-card img {
-    width: 35%;
-    object-fit: cover;
+/* ========== FOTO ANIME LUAR ========== */
+.anime-layer{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+}
+.anime-img{
+    position:absolute;
+    width:110px;
+    opacity:0;
+    animation:fadeIn 1s ease forwards, float 6s ease-in-out infinite;
+}
+.anime-left{left:6%; top:45%}
+.anime-right{right:6%; top:45%}
+.anime-top{left:50%; top:6%; transform:translateX(-50%)}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:scale(.6)}
+    to{opacity:1}
+}
+@keyframes float{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-18px)}
+    100%{transform:translateY(0)}
 }
 
-.series-info {
-    padding: 20px;
+/* ========== PARTY POPPER CONFETTI ========== */
+.confetti{
+    position:absolute;
+    width:8px;
+    height:14px;
+    background:var(--color);
+    opacity:.9;
+    animation:confettiFly 1.4s ease-out forwards;
 }
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #020617;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-th, td {
-    padding: 14px;
-}
-
-th {
-    background: #1e293b;
-}
-
-.rating-bar {
-    background: #1e293b;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.rating-fill {
-    height: 10px;
-    background: linear-gradient(90deg, #22c55e, #4ade80);
-}
-
-/* ================= PAGE 2 ================= */
-#surprisePage {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #220079, #0033ff);
-    animation: fadeIn 1.5s ease;
-}
-
-.surprise-box {
-    background: rgba(255,255,255,0.2);
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-}
-
-.surprise-box img {
-    width: 200px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
-
-.surprise-box h1 {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-.surprise-box p {
-    font-size: 18px;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .series-card {
-        flex-direction: column;
+@keyframes confettiFly{
+    from{transform:translate(0,0) rotate(0);opacity:1}
+    to{
+        transform:
+        translate(
+            calc(-200px + 400px * var(--x)),
+            calc(-200px + 400px * var(--y))
+        )
+        rotate(720deg);
+        opacity:0;
     }
-    .series-card img {
-        width: 100%;
-        height: 280px;
-    }
 }
 
-
+@media(max-width:768px){
+    .series-card{flex-direction:column}
+    .series-card img{width:100%;height:260px}
+    .anime-img{width:80px}
+}
 </style>
 </head>
 
 <body>
 
-<!-- ================= KINGDOM PAGE ================= -->
+<!-- PAGE 1 -->
 <div id="kingdomPage">
-    <div class="container">
-        <h1>Kingdom (Anime)</h1>
-        <p style="opacity:0.7;margin-bottom:20px">Rating per Episode – Community Score</p>
+<div class="container">
+<h1>Kingdom (Anime)</h1>
+<p style="opacity:.7;margin-bottom:20px">Rating per Episode</p>
 
-        <div class="series-card">
-            <img src="Kingdom.png">
-            <div class="series-info">
-                <h2>Season 1</h2>
-                <p>Perjalanan Xin menuju jenderal besar di era Tiongkok kuno.</p>
-            </div>
-        </div>
+<div class="series-card">
+<img src="Kingdom.jpg">
+<div class="series-info">
+<h2>Season 1</h2><br>
+<p class="sinopsis">Cerita berlatar di daratan China pada masa kerajaan kuno. Setelah jaman kesucian berakhir, hasrat manusia mulai terlepas, sejak saat itu lebih dari 500 tahun manusia mulai berperang. Keinginan, kesenangan, rasa sakit dan ketakutan menimbulkan keputusasaan.
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Episode</th>
-                    <th>Judul</th>
-                    <th>Rating</th>
-                </tr>
-            </thead>
-            <tbody id="ratingTable"></tbody>
-        </table>
-    </div>
+Semula ada lebih dari 100 negara hancur satu persatu kini hanya menyisakan 7 negara besar, Yan, Qi, Zhao, Wei, Han, Chu, dan Qin. 7 kekuasaan yang bertahan hingga kini terus menangkat pedang dan menusuk negara negara lainnya, Era yang kini disebut sebagai Periode Perang Musim Semi dan Gugur.
+
+Di sebuah desa di Negara Qin bagian barat, terdapat dua anak yang memiliki tekad untuk menjadi sosok yang besar di masa mendatang yaitu Xin & Piao, kini mereka hanyalah budak tanpa ada yang spesial diantara keduanya, namun kerja keras mereka berdua untuk keluar dari ketiadaan. Ini adalah seorang anak tanpa nama yang bertekad untuk hidup di jaman peperangan yang penuh akan kedustaan.</p>
+</div>
 </div>
 
-<!-- ================= SURPRISE PAGE ================= -->
+<table>
+<thead>
+<tr><th>Episode</th><th>Judul</th><th>Rating</th></tr>
+</thead>
+<tbody id="ratingTable"></tbody>
+</table>
+</div>
+</div>
+
+<!-- SURPRISE -->
 <div id="surprisePage">
-    <div class="surprise-box">
-        <img src="foto.png" alt="Birthday">
-        <h1>Selamat Ulang Tahun Vroz </h1>
-        <p>
-            Semoga panjang umur, sehat selalu, <br>
-            dan semua impianmu tercapai <br>
-            (Frand Ultah juga hari ini btw)
+<div class="anime-layer" id="animeLayer"></div>
 
-            <p id="moreText" class="hidden-text">
-        Terima kasih sudah menjadi orang yang luar biasa.
-        Semoga hari ini penuh tawa, kebahagiaan,
-        dan momen tak terlupakan 
-    </p>
-    <span id="readMore">Baca selengkapnya</span>
+<div class="surprise-box">
+<img src="foto.png">
+<h1>Selamat Ulang Tahun Vicky (Vroz)</h1><br>
+<p>Semoga sehat, bahagia, dan sukses selalu</p>
+
+<div id="moreText" class="hidden-text">
+<p>Terima kasih sudah menjadi orang baik<br>
+Semoga semua impianmu tercapai</p>
+<p>(Frand Ultah juga Btw)</p><br>
+<p>Dari Ricky dan Wilson</p>
 </div>
-        
 
-        <audio id="lagu" src="Felez nevede.mp3" autoplay></audio>
-    
+<span id="readMore">Baca selengkapnya</span>
+</div>
+
+<audio id="lagu" src="Felez nevede.mp3"></audio>
+</div>
+
 <script>
-const episodes = [
-    { ep: 1, title: "Nameless Boy", rating: 8.2 },
-    { ep: 2, title: "The Boy and the King", rating: 8.4 },
-    { ep: 3, title: "The Assassin Clan", rating: 8.1 },
-    { ep: 4, title: "The Road to Power", rating: 8.3 },
-    { ep: 5, title: "Battle Begins", rating: 8.6 },
-    { ep: 6, title: "Unyielding Will", rating: 8.5 },
-    { ep: 7, title: "Battle of Dakan Plains", rating: 8.8 },
-    { ep: 8, title: "Victory and Loss", rating: 8.7 }
+/* DATA EPISODE */
+const episodes=[
+{ep:1,title:"Nameless Boy",rating:8.2},
+{ep:2,title:"The Boy and the King",rating:8.4},
+{ep:3,title:"The Assassin Clan",rating:8.1},
+{ep:4,title:"The Road to Power",rating:8.3},
+{ep:5,title:"Battle Begins",rating:8.6},
+{ep:6,title:"Unyielding Will",rating:8.5},
+{ep:7,title:"Battle of Dakan Plains",rating:8.8},
+{ep:8,title:"Victory and Loss",rating:8.7}
 ];
 
-
-
-
-const table = document.getElementById("ratingTable");
-
-
-episodes.forEach(e => {
-    table.innerHTML += `
-        <tr>
-            <td>Episode ${e.ep}</td>
-            <td>${e.title}</td>
-            <td>
-                ${e.rating}/10
-                <div class="rating-bar">
-                    <div class="rating-fill" style="width:${e.rating * 10}%"></div>
-                </div>
-            </td>
-        </tr>
-    `;
+const table=document.getElementById("ratingTable");
+episodes.forEach(e=>{
+table.innerHTML+=`
+<tr>
+<td>Episode ${e.ep}</td>
+<td>${e.title}</td>
+<td>${e.rating}/10
+<div class="rating-bar">
+<div class="rating-fill" style="width:${e.rating*10}%"></div>
+</div>
+</td>
+</tr>`;
 });
 
+/* PINDAH KE SURPRISE (2 DETIK) */
+setTimeout(()=>{
+const sp=document.getElementById("surprisePage");
+document.getElementById("kingdomPage").style.display="none";
+sp.style.display="flex";
+sp.classList.add("show");
+},2000);
 
+/* INTERAKSI */
+const readMore=document.getElementById("readMore");
+const moreText=document.getElementById("moreText");
+const music=document.getElementById("lagu");
+const animeLayer=document.getElementById("animeLayer");
+const surprisePage=document.getElementById("surprisePage");
 
-setTimeout(() => {
-    document.getElementById("kingdomPage").style.display = "none";
-    document.getElementById("surprisePage").style.display = "flex";
-    document.title = "🎉 Surprise!";
+readMore.addEventListener("click",()=>{
+moreText.classList.add("show");
+readMore.style.display="none";
 
-    
-}, 3000);
+/* musik fade in */
+music.volume=0;
+music.play();
+let v=0;
+const fade=setInterval(()=>{
+v+=0.05;
+music.volume=v;
+if(v>=0.7)clearInterval(fade);
+},120);
 
-
-const music = document.getElementById("lagu");
-const readMore = document.getElementById("readMore");
-const moreText = document.getElementById("moreText");
-
-readMore.addEventListener("click", () => {
-    // tampilkan teks
-    moreText.classList.add("show");
-
-    // mainkan lagu
-    music.volume = 0;
-    music.play();
-
-    // fade-in musik
-    let vol = 0;
-    const fade = setInterval(() => {
-        vol += 0.05;
-        music.volume = Math.min(vol, 0.7);
-        if (vol >= 0.7) clearInterval(fade);
-    }, 150);
-
-    // hilangkan link palsu
-    readMore.style.display = "none";
+/* foto anime */
+[
+{src:"vroz.jpeg",class:"anime-img anime-left"},
+{src:"i.jpeg",class:"anime-img anime-right"},
+{src:"l.jpeg",class:"anime-img anime-top"}
+].forEach(p=>{
+const img=document.createElement("img");
+img.src=p.src;
+img.className=p.class;
+animeLayer.appendChild(img);
 });
 
+/* PARTY POPPER */
+const colors=["#fde047","#fb7185","#60a5fa","#34d399","#f472b6"];
+for(let i=0;i<40;i++){
+const c=document.createElement("div");
+c.className="confetti";
+c.style.left="50%";
+c.style.top="50%";
+c.style.setProperty("--x",Math.random());
+c.style.setProperty("--y",Math.random());
+c.style.setProperty("--color",colors[Math.floor(Math.random()*colors.length)]);
+surprisePage.appendChild(c);
+setTimeout(()=>c.remove(),1400);
+}
+});
 </script>
 
 </body>
 </html>
-
-
 
 
 
