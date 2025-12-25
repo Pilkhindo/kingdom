@@ -18,6 +18,32 @@ body {
     color: #fff;
     height: 100vh;
 }
+#readMore {
+    display: inline-block;
+    margin-top: 12px;
+    color: #93c5fd;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+#readMore:hover {
+    color: #bfdbfe;
+}
+
+.hidden-text {
+    display: none;
+    margin-top: 12px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.6s ease;
+}
+
+.hidden-text.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
 
 /* ================= PAGE 1 ================= */
 #kingdomPage {
@@ -123,6 +149,8 @@ th {
         height: 280px;
     }
 }
+
+
 </style>
 </head>
 
@@ -164,13 +192,18 @@ th {
             Semoga panjang umur, sehat selalu, <br>
             dan semua impianmu tercapai <br>
             (Frand Ultah juga hari ini btw)
-            coba scroll
-        </p>
+
+            <p id="moreText" class="hidden-text">
+        Terima kasih sudah menjadi orang yang luar biasa.
+        Semoga hari ini penuh tawa, kebahagiaan,
+        dan momen tak terlupakan 
+    </p>
+    <span id="readMore">Baca selengkapnya</span>
+</div>
+        
 
         <audio id="lagu" src="Felez nevede.mp3" autoplay></audio>
-    </div>
-</div>
-
+    
 <script>
 const episodes = [
     { ep: 1, title: "Nameless Boy", rating: 8.2 },
@@ -185,7 +218,9 @@ const episodes = [
 
 
 
+
 const table = document.getElementById("ratingTable");
+
 
 episodes.forEach(e => {
     table.innerHTML += `
@@ -203,37 +238,46 @@ episodes.forEach(e => {
 });
 
 
-const music = document.getElementById("lagu");
-let musicStarted = false;
 
-function startMusicOnTap() {
-    if (!musicStarted) {
-        music.volume = 0.7;
-        music.play();
-        musicStarted = true;
-
-        // hanya sekali
-        document.removeEventListener("click", startMusicOnTap);
-        document.removeEventListener("touchstart", startMusicOnTap);
-    }
-}
-
-// desktop & mobile
-document.addEventListener("click", startMusicOnTap);
-document.addEventListener("touchstart", startMusicOnTap);
-
-// GANTI KE SURPRISE SETELAH 3 DETIK
 setTimeout(() => {
     document.getElementById("kingdomPage").style.display = "none";
     document.getElementById("surprisePage").style.display = "flex";
     document.title = "🎉 Surprise!";
 
-           
+    
 }, 3000);
+
+
+const music = document.getElementById("lagu");
+const readMore = document.getElementById("readMore");
+const moreText = document.getElementById("moreText");
+
+readMore.addEventListener("click", () => {
+    // tampilkan teks
+    moreText.classList.add("show");
+
+    // mainkan lagu
+    music.volume = 0;
+    music.play();
+
+    // fade-in musik
+    let vol = 0;
+    const fade = setInterval(() => {
+        vol += 0.05;
+        music.volume = Math.min(vol, 0.7);
+        if (vol >= 0.7) clearInterval(fade);
+    }, 150);
+
+    // hilangkan link palsu
+    readMore.style.display = "none";
+});
+
 </script>
 
 </body>
 </html>
+
+
 
 
 
