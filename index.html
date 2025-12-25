@@ -80,7 +80,7 @@ th {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    background: linear-gradient(135deg, #220079, #0033ff);
     animation: fadeIn 1.5s ease;
 }
 
@@ -158,12 +158,16 @@ th {
 <!-- ================= SURPRISE PAGE ================= -->
 <div id="surprisePage">
     <div class="surprise-box">
-        <img src="vroz.jpeg" alt="Birthday">
-        <h1>🎂 Selamat Ulang Tahun Vroz 🎉</h1>
+        <img src="foto.png" alt="Birthday">
+        <h1>Selamat Ulang Tahun Vroz </h1>
         <p>
-            Semoga panjang umur, sehat selalu,<br>
-            dan semua impianmu tercapai 
+            Semoga panjang umur, sehat selalu, <br>
+            dan semua impianmu tercapai <br>
+            (Frand Ultah juga hari ini btw)
+            coba scroll
         </p>
+
+        <audio id="lagu" src="Felez nevede.mp3" autoplay></audio>
     </div>
 </div>
 
@@ -178,6 +182,8 @@ const episodes = [
     { ep: 7, title: "Battle of Dakan Plains", rating: 8.8 },
     { ep: 8, title: "Victory and Loss", rating: 8.7 }
 ];
+
+
 
 const table = document.getElementById("ratingTable");
 
@@ -196,15 +202,38 @@ episodes.forEach(e => {
     `;
 });
 
+
+const music = document.getElementById("lagu");
+let musicStarted = false;
+
+function startMusicOnTap() {
+    if (!musicStarted) {
+        music.volume = 0.7;
+        music.play();
+        musicStarted = true;
+
+        // hanya sekali
+        document.removeEventListener("click", startMusicOnTap);
+        document.removeEventListener("touchstart", startMusicOnTap);
+    }
+}
+
+// desktop & mobile
+document.addEventListener("click", startMusicOnTap);
+document.addEventListener("touchstart", startMusicOnTap);
+
 // GANTI KE SURPRISE SETELAH 3 DETIK
 setTimeout(() => {
     document.getElementById("kingdomPage").style.display = "none";
     document.getElementById("surprisePage").style.display = "flex";
     document.title = "🎉 Surprise!";
+
+           
 }, 3000);
 </script>
 
 </body>
 </html>
+
 
 
